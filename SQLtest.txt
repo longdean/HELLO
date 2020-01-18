@@ -8,15 +8,15 @@
 	select * from renwu
 	select bianhao 编号,xingming 姓名,xingbie 性别,zhiwu 职务,nianling 年龄,gongzi 工资 from renwu
 --添加记录
-	insert into renwu values(08,'张三','男','机械工程师',25,6300)
-	insert into renwu values(09,'李四','男','机械工程师',25,5600)
+	insert into renwu values(08,'张三','男','java工程师',25,6300)
+	insert into renwu values(09,'李四','男','C++工程师',25,5600)
 	insert into renwu values(05,'王五','女','项目经理',30,13000)
 	insert into renwu values(04,'小微','男','项目工程师',31,14000)
 	insert into renwu values(07,'小玉','女','项目工程师',33,13000)
 	insert into renwu values(06,'老李','男','资深项目工程师',32,14000)
 	insert into renwu values(02,'老吴','男','主任工程师',34,20000)
 	insert into renwu values(03,'霞姐','女','主管',35,16000)
-	insert into renwu values(01,'老杨','男','科长',45,22000)
+	insert into renwu values(01,'老杨','男','老板',45,22000)
 --删除表格里的内容
 	delete from renwu
 --按条件删除表格内某一行
