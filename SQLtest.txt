@@ -8,8 +8,8 @@
 	select * from renwu
 	select bianhao 编号,xingming 姓名,xingbie 性别,zhiwu 职务,nianling 年龄,gongzi 工资 from renwu
 --添加记录
-	insert into renwu values(08,'张三','男','java工程师',25,6300)
-	insert into renwu values(09,'李四','男','C++工程师',25,5600)
+	insert into renwu values(08,'张三','男','java工程师',25,8000)
+	insert into renwu values(09,'李四','男','C++工程师',25,8000)
 	insert into renwu values(05,'王五','女','项目经理',30,13000)
 	insert into renwu values(04,'小微','男','项目工程师',31,14000)
 	insert into renwu values(07,'小玉','女','项目工程师',33,13000)
