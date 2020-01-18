@@ -1,0 +1,194 @@
+--新建数据库
+	create database shuguo
+--创建表格
+	create table renwu(bianhao int,xingming nvarchar(5),xingbie nchar(1),zhiwu nvarchar(10),nianling int,gongzi numeric(6,1))
+--删除整个表格
+	drop table renwu
+--查询显示全部表格
+	select * from renwu
+	select bianhao 编号,xingming 姓名,xingbie 性别,zhiwu 职务,nianling 年龄,gongzi 工资 from renwu
+--添加记录
+	insert into renwu values(08,'张三','男','机械工程师',25,6300)
+	insert into renwu values(09,'李四','男','机械工程师',25,5600)
+	insert into renwu values(05,'王五','女','项目经理',30,13000)
+	insert into renwu values(04,'小微','男','项目工程师',31,14000)
+	insert into renwu values(07,'小玉','女','项目工程师',33,13000)
+	insert into renwu values(06,'老李','男','资深项目工程师',32,14000)
+	insert into renwu values(02,'老吴','男','主任工程师',34,20000)
+	insert into renwu values(03,'霞姐','女','主管',35,16000)
+	insert into renwu values(01,'老杨','男','科长',45,22000)
+--删除表格里的内容
+	delete from renwu
+--按条件删除表格内某一行
+	delete from renwu where bianhao=2
+--条件筛选
+	select bianhao 编号,xingming 姓名,gongzi 工资 from renwu where gongzi<7000
+	select bianhao 编号,xingming 姓名,gongzi 工资 from renwu where gongzi>15000
+--排序
+	select * from renwu order by bianhao
+--修改
+	update renwu set gongzi=gongzi*1.12 where gongzi<10000
+--时间
+	--datetime timestamp,时间的数据类型
+--主键 primary key,主键不能重复,具有唯一性
+	create table gsyg(bianhao int primary key,xingming nvarchar(10),nianling int)
+--添加记录
+	insert into gsyg values(1,'吴京',25)
+	insert into gsyg values(2,'甄子丹',27)
+	insert into gsyg values(3,'霍元甲',25)
+	insert into gsyg values(4,'李连杰',23)
+	insert into gsyg values(5,'叶问',31)
+	select * from gsyg
+--按条件删除
+	update gsyg set nianling=32 where xingming='叶问'
+	delete from gsyg where nianling=25 and xingming='吴京'
+	delete from gsyg where nianling=25 or xingming='霍元甲'
+
+--外建 foreign key,外键只能指向主键并且类型要一致
+	create database shuihu--创建数据库"shuihu"
+	create table bumen(--创建bumen表
+	bianhao int primary key,
+	mingcheng nvarchar(5),
+	didian nvarchar(5))
+
+	create table renwu(--创建renwu表
+	paihang int primary key,--主键
+	xingming nvarchar(20),
+	zhiwu nvarchar(20),
+	shangsi int,
+	ruzhishijian datetime,
+	gongzi numeric(6,1),
+	buzhu numeric(5,1),
+	bianhao int foreign key references bumen(bianhao)) --外键
+
+	insert into bumen values(1,'总头领','聚义厅')
+	insert into bumen values(2,'文职','前山')
+	insert into bumen values(3,'马军','左山')
+	insert into bumen values(4,'步军','右山')
+	insert into bumen values(5,'水军','山下')
+	insert into bumen values(6,'后勤','后山')
+	select * from bumen
+
+	insert into renwu(paihang,xingming,zhiwu,ruzhishijian,gongzi,buzhu,bianhao) values(101,'宋江','寨主','2002-03-15',20000,3000,1)
+	insert into renwu values(102,'卢俊义','寨主',101,'2002-06-16',18000,3000,1)
+	insert into renwu values(103,'吴用','军师',101,'2002-08-19',17000,2800,2)
+	insert into renwu values(104,'公孙胜','军师',103,'2002-09-22',16000,2600,2)
+	insert into renwu values(105,'关胜','大将',102,'2003-02-15',15000,2300,3)
+	insert into renwu(paihang,xingming,zhiwu,shangsi,ruzhishijian,gongzi,bianhao) values(106,'徐宁','小将',105,'2005-07-09',14000,3)
+	insert into renwu values(107,'鲁智深','大将',102,'2003-04-22',13000,2000,4)
+	insert into renwu values(108,'武松','大将',107,'2003-09-08',12000,1800,4)
+	insert into renwu(paihang,xingming,zhiwu,shangsi,ruzhishijian,gongzi,bianhao) values(109,'李逵','小将',107,'2005-04-11',10000,4)
+	insert into renwu values(110,'李俊','大将',102,'2005-01-16',13000,3000,5)
+	insert into renwu(paihang,xingming,zhiwu,shangsi,ruzhishijian,gongzi,bianhao) values(111,'阮小二','小将',110,'2005-06-24',13000,5)
+	insert into renwu(paihang,xingming,zhiwu,shangsi,ruzhishijian,gongzi,bianhao) values(112,'阮小七','小将',110,'2005-06-15',12000,5)
+	insert into renwu values(113,'柴进','总管',101,'2004-03-05',11000,1000,6)
+	insert into renwu values(114,'李英','总管',113,'2006-03-10',10000,600,6)
+	insert into renwu(paihang,xingming,zhiwu,shangsi,ruzhishijian,gongzi,bianhao) values(115,'时迁','小将',113,'2007-11-19',8000,6)
+	select * from renwu
+--外键不能超出主键范围之外:
+	insert into renwu values(116,'柴进','总管',101,'2004-03-05',11000,1000,6)
+	insert into renwu values(117,'柴进','总管',101,'2004-03-05',11000,1000,6)
+	delete from renwu where paihang=116 or paihang=117
+--distinct去重,如去掉编号相同的记录
+	select distinct bianhao'编号' from renwu
+--显示每个人的年薪,补贴,年总收入,并且把字段一中文显示
+	select xingming'姓名',gongzi*12'年工资' from renwu
+	select paihang'排行',xingming'姓名',gongzi*12'年工资',isnull(buzhu,0)*12'年总补贴',gongzi*12+isnull(buzhu,0)*12'年总收入' from renwu
+--查询2004年1月1日以后入职的员工
+	select xingming'姓名',ruzhishijian'入职时间' from renwu where ruzhishijian<'2004-01-01' and ruzhishijian>'2003-01-01'
+--模糊查询
+	select xingming'姓名'from renwu where xingming like'李%'
+	select xingming'姓名'from renwu where xingming like'_俊%'
+	select * from renwu where xingming like'_俊%'
+	select * from renwu where xingming like'李%'
+--批量查询
+	select * from renwu where paihang in(101,105,108,114)
+--显示一把手的姓名和职务
+	select xingming'姓名',zhiwu'职务' from renwu where shangsi is null
+--显示最大值/最小值
+	select max(gongzi) from renwu
+	select min(gongzi) from renwu
+--显示总工资和平均工资
+	select sum(gongzi)'总工资',avg(gongzi)'平均工资' from renwu
+--显示高于平均工资的人
+	select * from renwu where gongzi>(select avg(gongzi) from renwu)
+--按部门编号升序,按工资降序
+	select * from renwu order by bianhao,gongzi desc
+--用起临时名的方法算年总收入并降序
+	select paihang,xingming,bianhao,gongzi*12+isnull(buzhu,0)*12 nianxin from renwu order by nianxin desc
+	select paihang,xingming,zhiwu,bianhao,gongzi*12+isnull(buzhu,0)*12 年薪 from renwu order by 年薪 desc 
+--统计有多少条记录
+	select count(*) from renwu where gongzi>10000
+--统计每个部门的平均工资和总工资,并以平均工资降序
+	select bianhao,avg(gongzi)'平均工资',sum(gongzi)'总工资' from renwu group by bianhao order by avg(gongzi) desc
+--显示每个部门每个职务的平均工资和最低工资
+	select bianhao'编号',avg(gongzi)'平均工资',min(gongzi)'最低工资',zhiwu'职务' from renwu group by bianhao,zhiwu order by bianhao
+--显示平均工资低于15000的部门编号和平均工资
+	select bianhao'编号',avg(gongzi)'平均工资' from renwu group by bianhao having avg(gongzi)<15000
+
+--多表查询
+	select * from renwu,bumen where bumen.mingcheng='水军' and renwu.bianhao=bumen.bianhao--让主键和外键对应上,否则会产生笛卡尔现象
+--显示姓名和所在部门以及部门编号
+	select xingming 姓名,mingcheng 部门名称,renwu.bianhao 部门编号 from renwu,bumen where renwu.bianhao=bumen.bianhao--让主键和外键对应上,否则会产生笛卡尔现象
+--显示部门编号为4的部门名称,人员姓名和工资
+	select xingming 姓名,mingcheng 部门名称,gongzi 工资 from renwu,bumen where (renwu.bianhao=bumen.bianhao)and (bumen.bianhao=4)
+--显示姓名,部门编号,工资,并按部门编号排序
+	select xingming 姓名,mingcheng 部门名称,gongzi 工资 from renwu,bumen where renwu.bianhao=bumen.bianhao order by bumen.bianhao
+--显示李逵的上司
+	select shangsi from renwu where xingming='李逵'
+--显示所有人及其上司的姓名
+	select a.xingming 姓名,b.xingming 上司 from renwu a,renwu b where a.shangsi=b.paihang
+
+--子查询
+--单行子查询
+	select xingming 姓名 from renwu where bianhao=(select bianhao from renwu where xingming='鲁智深')
+--多行子查询
+	select xingming,gongzi,zhiwu,bianhao from renwu where zhiwu in(select distinct zhiwu from renwu where bianhao=5) and (bianhao!=5)
+
+--分页查询
+--显示高于部门平均工资的人的姓名和工资,部门编号以及部门的平均工资
+	select avg(gongzi),bianhao from renwu group by bianhao
+	select xingming,gongzi,pjgz,renwu.bianhao from renwu,(select avg(gongzi) pjgz,bianhao from renwu group by bianhao) lsb where (renwu.bianhao=lsb.bianhao) and (renwu.gongzi>lsb.pjgz)
+--显示第一个到第五个入职的员工
+	select top 5 xingming,zhiwu,ruzhishijian from renwu order by ruzhishijian
+--显示第6个到第13个入职的员工
+	select top 8 xingming,ruzhishijian from renwu where ruzhishijian not in (select top 5 ruzhishijian from renwu) order by ruzhishijian
+
+--删除重复记录
+	create table xiaobiao(
+	xbbh int,
+	xbxm varchar(10))
+	insert into xiaobiao values (1,'xb1')
+	insert into xiaobiao values (1,'xb2')
+	insert into xiaobiao values (1,'xb3')
+	insert into xiaobiao values (1,'xb1')
+	insert into xiaobiao values (1,'xb1')
+	insert into xiaobiao values (1,'xb1')
+	insert into xiaobiao values (1,'xb1')
+	select * from xiaobiao
+
+	select distinct * into a from xiaobiao 
+	delete from xiaobiao
+	insert into xiaobiao select* from a
+	drop table a
+
+--内连接
+	select a.xingming 姓名,b.xingming 上司 from renwu a,renwu b where a.shangsi=b.paihang
+--外连接:left join左边的表全部显示,右边的表根据条件(on后面)有就显示,无就显示null
+	select a.xingming 姓名,b.xingming 上司 from renwu a left join renwu b on a.shangsi=b.paihang
+
+
+
+--约束
+--not null 不为空;nuique 唯一的;primary key 主键;foreign key 外键;check 自定义
+--check 自定义
+	create table dabiao(
+	dbbh int,
+	dbxm varchar(20),
+	nianling int check(nianling>=16 and nianling<=30)
+
+--default 默认值
+	create table dabiao1(
+	dbbh int primary key,
+	dbxm varchar(20),
+	nianling int check(nianling>=16 and nianling<=45) default 25)
